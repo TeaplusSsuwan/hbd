@@ -173,10 +173,10 @@
     </div>
 
     <!-- ==========================================
-         ระบบควบคุมเครื่องเล่นเพลงพื้นหลัง (Background Music)
+         ระบบควบคุมเครื่องเล่นเพลงพื้นหลัง (Background Music - YouTube Player)
          ========================================== -->
-    <!-- ลิงก์เพลงเปียโนบรรเลงเบาๆ อบอุ่นและลิขสิทธิ์ฟรี (คุณสามารถเปลี่ยนลิงก์ MP3 นี้เป็นเพลงโปรดของคุณได้เลยครับ) -->
-    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"></audio>
+    <!-- ใช้ Iframe ของ YouTube ดึงเฉพาะเสียงจากลิงก์เพลงที่ระบุเพื่อให้เล่นเพลงแบบสตรีมมิ่งได้บนทุกอุปกรณ์ -->
+    <iframe id="youtube-player" src="https://www.youtube.com/embed/3B_HA2Yy2Ho?enablejsapi=1&loop=1&playlist=3B_HA2Yy2Ho" allow="autoplay" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></iframe>
 
     <!-- ปุ่มควบคุมเพลงเล่น/หยุดลอยตัวแบบมีระดับ -->
     <button class="music-control" id="music-btn" onclick="toggleMusic()">

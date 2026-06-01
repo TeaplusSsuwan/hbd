@@ -81,7 +81,7 @@ function openGift() {
     const body = document.getElementById('gift-body');
     const welcome = document.getElementById('welcome-view');
     const celebration = document.getElementById('celebration-view');
-    const bgMusic = document.getElementById('bg-music');
+    const youtubePlayer = document.getElementById('youtube-player');
     const musicBtn = document.getElementById('music-btn');
 
     // 1. Trigger Box opening animations
@@ -93,20 +93,13 @@ function openGift() {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 
-    // 2. Play beautiful royalty-free music
-    if (bgMusic) {
-        bgMusic.volume = 0.55;
-        bgMusic.play()
-            .then(() => {
-                isPlaying = true;
-                musicBtn.classList.add('playing');
-                musicBtn.classList.add('visible');
-                startMusicNotesInterval();
-            })
-            .catch(err => {
-                console.log("Music play failed initially, showing floating player:", err);
-                musicBtn.classList.add('visible');
-            });
+    // 2. Play beautiful YouTube music track
+    if (youtubePlayer) {
+        youtubePlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+        musicBtn.classList.add('visible');
+        startMusicNotesInterval();
     }
 
     // 3. Trigger massive confetti blast
@@ -353,9 +346,9 @@ function triggerGoldenConfetti() {
 let musicNotesIntervalId = null;
 
 function toggleMusic() {
-    const bgMusic = document.getElementById('bg-music');
+    const youtubePlayer = document.getElementById('youtube-player');
     const musicBtn = document.getElementById('music-btn');
-    if (!bgMusic) return;
+    if (!youtubePlayer) return;
 
     // Resume AudioContext just in case
     if (audioContext && audioContext.state === 'suspended') {
@@ -363,18 +356,15 @@ function toggleMusic() {
     }
 
     if (isPlaying) {
-        bgMusic.pause();
+        youtubePlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
         isPlaying = false;
         musicBtn.classList.remove('playing');
         clearInterval(musicNotesIntervalId);
     } else {
-        bgMusic.play()
-            .then(() => {
-                isPlaying = true;
-                musicBtn.classList.add('playing');
-                startMusicNotesInterval();
-            })
-            .catch(err => console.log("Failed to resume music playback:", err));
+        youtubePlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+        startMusicNotesInterval();
     }
 }
 

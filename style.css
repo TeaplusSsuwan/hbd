@@ -442,7 +442,7 @@ body {
 }
 
 .cake-container:hover .candle-flame {
-    transform: scale(1.15) translateX(-50%);
+    transform: scale(1.15);
 }
 
 /* Cake SVG Paths styling */
@@ -476,7 +476,7 @@ body {
 
 .candle-flame {
     fill: url(#flameGrad);
-    transform-origin: bottom center;
+    transform-origin: 100px 32px; /* Precise SVG pivot point */
     animation: flicker 0.25s infinite ease-in-out alternate;
     transition: transform 0.3s ease, opacity 0.5s ease;
 }
@@ -618,12 +618,12 @@ body {
 
 /* Realistic Candle Flicker */
 @keyframes flicker {
-    0% { transform: scale(1) translateX(-50%) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(243,156,18,0.8)); }
-    20% { transform: scale(1.05) translateX(-48%) rotate(1deg); filter: drop-shadow(0 0 6px rgba(243,156,18,0.9)); }
-    40% { transform: scale(0.95) translateX(-52%) rotate(-0.5deg); filter: drop-shadow(0 0 3px rgba(241,196,15,0.7)); }
-    60% { transform: scale(1.02) translateX(-49%) rotate(0deg); filter: drop-shadow(0 0 5px rgba(243,156,18,0.85)); }
-    80% { transform: scale(0.98) translateX(-51%) rotate(0.5deg); filter: drop-shadow(0 0 4px rgba(241,196,15,0.75)); }
-    100% { transform: scale(1.03) translateX(-50%) rotate(-0.5deg); filter: drop-shadow(0 0 6px rgba(243,156,18,0.9)); }
+    0% { transform: scale(1) rotate(-1.5deg); filter: drop-shadow(0 0 4px rgba(243,156,18,0.8)); }
+    20% { transform: scale(1.04) rotate(1deg); filter: drop-shadow(0 0 6px rgba(243,156,18,0.9)); }
+    40% { transform: scale(0.96) rotate(-0.5deg); filter: drop-shadow(0 0 3px rgba(241,196,15,0.7)); }
+    60% { transform: scale(1.02) rotate(1.5deg); filter: drop-shadow(0 0 5px rgba(243,156,18,0.85)); }
+    80% { transform: scale(0.98) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(241,196,15,0.75)); }
+    100% { transform: scale(1.03) rotate(0.5deg); filter: drop-shadow(0 0 6px rgba(243,156,18,0.9)); }
 }
 
 /* Smoke puff when extinguished */
