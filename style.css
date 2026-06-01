@@ -1,0 +1,815 @@
+/* ==========================================================================
+   PREMIUM BIRTHDAY CARD - STYLING & ANIMATIONS
+   ========================================================================== */
+
+/* Importing Modern Typography from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Caveat:wght@700&display=swap');
+
+:root {
+    /* Premium Harmonious Color Palette (HSL Tailored) */
+    --primary: hsl(348, 100%, 65%);       /* Sweet Pink-Red */
+    --primary-light: hsl(348, 100%, 73%); /* Soft Pastel Pink */
+    --primary-dark: hsl(348, 85%, 55%);
+    --secondary: hsl(265, 89%, 78%);      /* Pastel Violet */
+    --accent: hsl(45, 100%, 60%);         /* Warm Golden Gold */
+    --text-main: hsl(220, 20%, 25%);      /* Soft Charcoal */
+    --text-muted: hsl(220, 10%, 45%);
+    
+    /* Background & Overlays */
+    --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #e8dbfc 100%);
+    --bg-glass: rgba(255, 255, 255, 0.72);
+    --border-glass: rgba(255, 255, 255, 0.6);
+    --shadow-premium: 0 20px 45px rgba(255, 77, 109, 0.12), 
+                      0 8px 20px rgba(192, 132, 252, 0.08);
+    --shadow-inset: inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    
+    /* Fonts */
+    --font-sans: 'Kanit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-cursive: 'Caveat', cursive;
+}
+
+/* ==========================================================================
+   RESET & BASE STYLING
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================================================================
+   BALLOON SYSTEM (DYNAMICS)
+   ========================================================================== */
+.balloon-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.balloon {
+    position: absolute;
+    width: 55px;
+    height: 70px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    pointer-events: auto; /* Allow clicking! */
+    cursor: pointer;
+    box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.15), 
+                inset 6px 6px 12px rgba(255, 255, 255, 0.4), 
+                0 10px 20px rgba(0, 0, 0, 0.08);
+    transform-origin: bottom center;
+    transition: transform 0.1s ease;
+}
+
+/* Shiny spot on the balloon */
+.balloon::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    width: 12px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    transform: rotate(-30deg);
+}
+
+/* Balloon string and knot */
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid currentColor;
+}
+
+.balloon-string {
+    position: absolute;
+    bottom: -76px;
+    left: 50%;
+    width: 2px;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.15);
+    transform-origin: top center;
+}
+
+/* Pop particles burst */
+.pop-sparkle {
+    position: absolute;
+    pointer-events: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: explode 0.5s ease-out forwards;
+}
+
+/* ==========================================================================
+   APP CONTAINER (GLASSMORPHISM)
+   ========================================================================== */
+.card-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 20px;
+    perspective: 1000px;
+    z-index: 10;
+}
+
+.glass-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 28px;
+    padding: 40px 30px;
+    box-shadow: var(--shadow-premium), var(--shadow-inset);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 30px 60px rgba(255, 77, 109, 0.18), 
+                0 12px 28px rgba(192, 132, 252, 0.12);
+}
+
+/* ==========================================================================
+   VIEW 1: INTERACTIVE GIFT BOX
+   ========================================================================== */
+.gift-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gift-title {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.gift-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 45px;
+    font-weight: 300;
+}
+
+/* 3D Interactive Gift Box */
+.gift-box-container {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.gift-box-container:hover .gift-lid {
+    transform: translateY(-8px) rotate(-2deg);
+}
+
+.gift-box-container:hover .gift-body {
+    transform: scale(1.03);
+}
+
+/* Lid of the gift box */
+.gift-lid {
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 190px;
+    height: 40px;
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Lid Ribbon Vertical & Horizontal */
+.gift-lid::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(to bottom, #ffd700, #f1c40f);
+}
+
+/* Lid Bow Ribbon Loop Left */
+.gift-bow-left {
+    position: absolute;
+    top: -24px;
+    left: 52px;
+    width: 40px;
+    height: 30px;
+    border: 8px solid #ffd700;
+    border-radius: 50% 50% 0 50%;
+    transform: rotate(-25deg);
+}
+
+.gift-bow-right {
+    position: absolute;
+    top: -24px;
+    right: 52px;
+    width: 40px;
+    height: 30px;
+    border: 8px solid #ffd700;
+    border-radius: 50% 50% 50% 0%;
+    transform: rotate(25deg);
+}
+
+/* Body of the gift box */
+.gift-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 180px;
+    height: 145px;
+    background: linear-gradient(135deg, #ff758f, #ff8fa3);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 12px 25px rgba(255, 77, 109, 0.2);
+    z-index: 4;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Body Ribbon */
+.gift-body::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(to bottom, #ffd700, #f1c40f);
+}
+
+/* Fly off animations for Box */
+.gift-lid.fly {
+    animation: lidFly 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.gift-body.fall {
+    animation: bodyFall 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.btn-pulse {
+    font-family: var(--font-sans);
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 77, 109, 0.35);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.btn-pulse:hover {
+    transform: scale(1.04) translateY(-2px);
+    box-shadow: 0 12px 30px rgba(255, 77, 109, 0.45);
+}
+
+.btn-pulse:active {
+    transform: scale(0.98) translateY(1px);
+}
+
+/* ==========================================================================
+   VIEW 2: CELEBRATION LANDING
+   ========================================================================== */
+.celebration-view {
+    display: none; /* Initially hidden */
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.celebration-view.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.main-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 5px;
+    text-shadow: 0 4px 10px rgba(255, 77, 109, 0.1);
+}
+
+.birthday-badge {
+    font-family: var(--font-sans);
+    display: inline-block;
+    background: rgba(192, 132, 252, 0.15);
+    color: hsl(265, 80%, 55%);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   POLAROID STACK SLIDER
+   ========================================================================== */
+.polaroid-slider {
+    position: relative;
+    width: 280px;
+    height: 320px;
+    margin: 0 auto 35px;
+}
+
+.polaroid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    padding: 16px 16px 36px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 
+                0 4px 10px rgba(0, 0, 0, 0.04);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
+                opacity 0.6s ease, 
+                box-shadow 0.3s ease;
+    backface-visibility: hidden;
+}
+
+.polaroid:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.14);
+}
+
+.polaroid-img-wrapper {
+    width: 100%;
+    height: 220px;
+    background: #eaeaea;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Vector Graphic placeholders for Polaroid photos */
+.polaroid-graphic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.polaroid-caption {
+    font-family: var(--font-cursive);
+    font-size: 1.6rem;
+    color: #333;
+    text-align: center;
+    margin-top: 15px;
+    transform: rotate(-2deg);
+}
+
+/* Polaroid Deck Stack Positions */
+.polaroid[data-index="0"] {
+    transform: rotate(-4deg) translateY(0) scale(1);
+    z-index: 10;
+    opacity: 1;
+}
+
+.polaroid[data-index="1"] {
+    transform: rotate(5deg) translate(8px, 4px) scale(0.96);
+    z-index: 9;
+    opacity: 0.9;
+}
+
+.polaroid[data-index="2"] {
+    transform: rotate(-2deg) translate(-8px, 8px) scale(0.92);
+    z-index: 8;
+    opacity: 0.8;
+}
+
+.polaroid.swipe-left {
+    transform: translateX(-350px) rotate(-30deg) scale(0.85) !important;
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.polaroid.swipe-right {
+    transform: translateX(350px) rotate(30deg) scale(0.85) !important;
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   INTERACTIVE SVG BIRTHDAY CAKE
+   ========================================================================== */
+.cake-container {
+    width: 180px;
+    margin: 0 auto 30px;
+    cursor: pointer;
+    position: relative;
+}
+
+.cake-container:hover .candle-flame {
+    transform: scale(1.15) translateX(-50%);
+}
+
+/* Cake SVG Paths styling */
+.cake-plate {
+    fill: #e2e8f0;
+}
+
+.cake-tier {
+    transition: transform 0.3s ease;
+}
+
+.cake-base {
+    fill: #fbcfe8; /* Pastel soft pink */
+}
+
+.cake-middle {
+    fill: #f472b6; /* Medium pink */
+}
+
+.cake-frosting {
+    fill: #ffffff;
+}
+
+.cake-topping {
+    fill: #f43f5e;
+}
+
+.candle-wax {
+    fill: #c084fc; /* Purple candle */
+}
+
+.candle-flame {
+    fill: url(#flameGrad);
+    transform-origin: bottom center;
+    animation: flicker 0.25s infinite ease-in-out alternate;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+}
+
+.candle-flame.extinguished {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Smoke line animation */
+.candle-smoke {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 0px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.candle-smoke.puff {
+    animation: smokePuff 1.8s ease-out forwards;
+}
+
+/* ==========================================================================
+   WISHES BLOCK (GLASS DESIGN)
+   ========================================================================== */
+.wishes-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px dashed rgba(255, 77, 109, 0.3);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.wishes-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+}
+
+.wishes-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    font-weight: 300;
+}
+
+/* Hidden elements triggered after blowing candle */
+.hidden-wish {
+    display: block;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    color: hsl(45, 100%, 40%);
+    font-weight: 500;
+    font-size: 0.95rem;
+    background: linear-gradient(to right, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.03));
+    border-radius: 10px;
+    margin-top: 0px;
+    padding: 0px;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hidden-wish.active {
+    height: auto;
+    opacity: 1;
+    padding: 12px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+/* ==========================================================================
+   MUSIC CONTROLLER
+   ========================================================================== */
+.music-control {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+}
+
+.music-control.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.music-control:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 12px 25px rgba(255, 77, 109, 0.25);
+    background: var(--primary-light);
+    color: white;
+}
+
+.music-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.music-control.playing .music-icon {
+    animation: musicPulse 1.5s infinite linear;
+}
+
+/* Custom music notes flying */
+.music-note {
+    position: absolute;
+    color: var(--primary);
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    animation: floatNote 2s ease-out forwards;
+}
+
+/* ==========================================================================
+   ANIMATIONS KEYFRAMES
+   ========================================================================== */
+
+/* Realistic Candle Flicker */
+@keyframes flicker {
+    0% { transform: scale(1) translateX(-50%) rotate(-1deg); filter: drop-shadow(0 0 4px rgba(243,156,18,0.8)); }
+    20% { transform: scale(1.05) translateX(-48%) rotate(1deg); filter: drop-shadow(0 0 6px rgba(243,156,18,0.9)); }
+    40% { transform: scale(0.95) translateX(-52%) rotate(-0.5deg); filter: drop-shadow(0 0 3px rgba(241,196,15,0.7)); }
+    60% { transform: scale(1.02) translateX(-49%) rotate(0deg); filter: drop-shadow(0 0 5px rgba(243,156,18,0.85)); }
+    80% { transform: scale(0.98) translateX(-51%) rotate(0.5deg); filter: drop-shadow(0 0 4px rgba(241,196,15,0.75)); }
+    100% { transform: scale(1.03) translateX(-50%) rotate(-0.5deg); filter: drop-shadow(0 0 6px rgba(243,156,18,0.9)); }
+}
+
+/* Smoke puff when extinguished */
+@keyframes smokePuff {
+    0% {
+        width: 2px;
+        height: 0px;
+        opacity: 0;
+        transform: translate(-50%, 0) scaleX(1);
+    }
+    15% {
+        width: 12px;
+        height: 15px;
+        opacity: 0.6;
+        background: rgba(150, 150, 150, 0.4);
+    }
+    50% {
+        width: 25px;
+        height: 35px;
+        opacity: 0.3;
+        background: rgba(180, 180, 180, 0.2);
+        transform: translate(-50%, -20px) scaleX(1.4) skewX(-10deg);
+    }
+    100% {
+        width: 35px;
+        height: 50px;
+        opacity: 0;
+        transform: translate(-50%, -45px) scaleX(2) skewX(-20deg);
+    }
+}
+
+/* Balloon float upwards with side-to-side sway */
+@keyframes floatUp {
+    0% {
+        transform: translateY(105vh) translateX(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-110px) translateX(var(--sway-x)) rotate(var(--rotate-deg));
+    }
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(25px);
+    }
+}
+
+/* Balloon Pop particles explosion */
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Lid flying off */
+@keyframes lidFly {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    30% {
+        transform: translateY(-40px) rotate(-15deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-250px) translateX(120px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* Box falling slightly and shrinking */
+@keyframes bodyFall {
+    0% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+    30% {
+        transform: scale(1.08) translateY(10px);
+    }
+    100% {
+        transform: scale(0) translateY(50px);
+        opacity: 0;
+    }
+}
+
+/* Music play spinning/pulsing action */
+@keyframes musicPulse {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.08);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+/* Floating tiny musical notes */
+@keyframes floatNote {
+    0% {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--ndx), var(--ndy)) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Gentle floating for Polaroid cards */
+.polaroid-slider:hover .polaroid[data-index="0"] {
+    animation: gentleFloat 3s infinite ease-in-out alternate;
+}
+
+@keyframes gentleFloat {
+    0% {
+        transform: rotate(-4deg) translateY(0);
+    }
+    100% {
+        transform: rotate(-2deg) translateY(-8px);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVENESS (MOBILE FRIENDLY)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .glass-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+    .main-title {
+        font-size: 2rem;
+    }
+    .gift-title {
+        font-size: 1.8rem;
+    }
+    .polaroid-slider {
+        width: 240px;
+        height: 280px;
+    }
+    .polaroid-img-wrapper {
+        height: 190px;
+    }
+    .polaroid-caption {
+        font-size: 1.3rem;
+        margin-top: 10px;
+    }
+    .gift-box-container {
+        width: 150px;
+        height: 150px;
+    }
+    .gift-lid {
+        width: 160px;
+        left: -5px;
+        height: 35px;
+    }
+    .gift-lid::before {
+        width: 24px;
+    }
+    .gift-body {
+        width: 150px;
+        height: 120px;
+    }
+    .gift-body::before {
+        width: 24px;
+    }
+    .gift-bow-left {
+        left: 40px;
+        width: 32px;
+        height: 25px;
+    }
+    .gift-bow-right {
+        right: 40px;
+        width: 32px;
+        height: 25px;
+    }
+}

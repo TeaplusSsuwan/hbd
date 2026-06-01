@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂✨</title>
+    
+    <!-- Canvas Confetti Library (สำหรับแอนิเมชันพลุกระดาษและกลิตเตอร์) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- นำเข้าชีตสไตล์ส่วนตัว -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- พื้นที่สำหรับลูกโป่งลอย (จะถูกสร้างอัตโนมัติจาก script.js) -->
+    <div class="balloon-container" id="balloon-container"></div>
+
+    <!-- กล่องหลักของเว็บไซต์ (การ์ดกระจกพรีเมียม) -->
+    <div class="card-wrapper">
+        <div class="glass-card">
+            
+            <!-- ==========================================
+                 หน้าจอที่ 1: หน้าเปิดกล่องของขวัญ (Welcome Screen)
+                 ========================================== -->
+            <div id="welcome-view" class="gift-view">
+                <h1 class="gift-title">You have a special gift! 🎁</h1>
+                <p class="gift-subtitle">มีบางอย่างถูกส่งมาให้คุณ ลองคลิกเพื่อเปิดกล่องสิ!</p>
+                
+                <!-- กล่องของขวัญ 3D แบบอินเตอร์แอคทีฟ -->
+                <div class="gift-box-container" onclick="openGift()">
+                    <!-- โบว์และฝากล่อง -->
+                    <div class="gift-lid" id="gift-lid">
+                        <div class="gift-bow-left"></div>
+                        <div class="gift-bow-right"></div>
+                    </div>
+                    <!-- ตัวกล่องของขวัญ -->
+                    <div class="gift-body" id="gift-body"></div>
+                </div>
+                
+                <button class="btn-pulse" onclick="openGift()">เปิดของขวัญ ✨</button>
+            </div>
+
+            <!-- ==========================================
+                 หน้าจอที่ 2: หน้าเฉลิมฉลอง (Celebration Screen)
+                 ========================================== -->
+            <div id="celebration-view" class="celebration-view">
+                
+                <!-- ส่วนหัวและคำอวยพรหลัก -->
+                <span class="birthday-badge">HAPPY CELEBRATION</span>
+                <h1 class="main-title">Happy Birthday! 🎉</h1>
+                
+                <!-- แกลเลอรีรูปภาพโพลารอยด์แห่งความทรงจำ (คลิกเพื่อเลื่อนรูปถัดไป) -->
+                <div class="polaroid-slider">
+                    
+                    <!-- โพลารอยด์ที่ 1: กล่องของขวัญแห่งความอบอุ่น -->
+                    <div class="polaroid" data-index="0">
+                        <div class="polaroid-img-wrapper" style="background: linear-gradient(135deg, #ffe5ec, #ffc2d1);">
+                            <svg viewBox="0 0 200 200" class="polaroid-graphic">
+                                <circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-dasharray="6,6" stroke-width="2"/>
+                                <!-- กล่องของขวัญวาดแบบ SVG -->
+                                <rect x="65" y="85" width="70" height="60" rx="4" fill="#ff758f"/>
+                                <rect x="60" y="70" width="80" height="20" rx="3" fill="#ff4d6d"/>
+                                <!-- ริบบิ้น -->
+                                <rect x="90" y="70" width="20" height="75" fill="#f1c40f"/>
+                                <path d="M75,55 C80,40 100,45 90,70" fill="none" stroke="#f1c40f" stroke-width="6"/>
+                                <path d="M125,55 C120,40 100,45 110,70" fill="none" stroke="#f1c40f" stroke-width="6"/>
+                                <circle cx="100" cy="70" r="7" fill="#ffd700"/>
+                            </svg>
+                        </div>
+                        <div class="polaroid-caption">Best wishes for you! 🌟</div>
+                    </div>
+
+                    <!-- โพลารอยด์ที่ 2: กล้องเก็บความทรงจำที่สวยงาม -->
+                    <div class="polaroid" data-index="1">
+                        <div class="polaroid-img-wrapper" style="background: linear-gradient(135deg, #e8dbfc, #f3e8ff);">
+                            <svg viewBox="0 0 200 200" class="polaroid-graphic">
+                                <circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-dasharray="6,6" stroke-width="2"/>
+                                <!-- กล้องถ่ายรูป SVG -->
+                                <rect x="60" y="80" width="80" height="55" rx="10" fill="#a78bfa"/>
+                                <rect x="80" y="68" width="40" height="15" rx="4" fill="#7c3aed"/>
+                                <circle cx="130" cy="90" r="6" fill="#f43f5e"/> <!-- ไฟแฟลช -->
+                                <circle cx="100" cy="108" r="22" fill="#fff"/>
+                                <circle cx="100" cy="108" r="15" fill="#4b5563"/>
+                                <!-- หัวใจพุ่งออกจากเลนส์ -->
+                                <path d="M135,55 C135,45 150,45 150,55 C150,65 135,70 135,70 C135,70 120,65 120,55 C120,45 135,45 135,55 Z" fill="#f43f5e"/>
+                            </svg>
+                        </div>
+                        <div class="polaroid-caption">Collect every memory 📸</div>
+                    </div>
+
+                    <!-- โพลารอยด์ที่ 3: บอลลูนแห่งความฝันและการเติบโต -->
+                    <div class="polaroid" data-index="2">
+                        <div class="polaroid-img-wrapper" style="background: linear-gradient(135deg, #e0f2fe, #bae6fd);">
+                            <svg viewBox="0 0 200 200" class="polaroid-graphic">
+                                <circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-dasharray="6,6" stroke-width="2"/>
+                                <!-- บอลลูนลอยฟ้า SVG -->
+                                <path d="M100,40 C75,40 60,65 60,90 C60,110 75,120 100,125 C125,120 140,110 140,90 C140,65 125,40 100,40 Z" fill="#38bdf8"/>
+                                <!-- ลายทางตกแต่งบนบอลลูน -->
+                                <path d="M100,40 C85,40 80,65 80,90 C80,110 90,120 100,125 C90,120 80,110 80,90" fill="none" stroke="#fff" stroke-width="3"/>
+                                <path d="M100,40 C115,40 120,65 120,90 C120,110 110,120 100,125 C110,120 120,110 120,90" fill="none" stroke="#fff" stroke-width="3"/>
+                                <!-- ตะกร้า -->
+                                <rect x="90" y="140" width="20" height="15" rx="2" fill="#d97706"/>
+                                <!-- เชือกบอลลูน -->
+                                <line x1="82" y1="123" x2="90" y2="140" stroke="#78350f" stroke-width="1.5"/>
+                                <line x1="118" y1="123" x2="110" y2="140" stroke="#78350f" stroke-width="1.5"/>
+                                <!-- เมฆ -->
+                                <circle cx="50" cy="130" r="15" fill="#fff" opacity="0.9"/>
+                                <circle cx="155" cy="80" r="12" fill="#fff" opacity="0.9"/>
+                            </svg>
+                        </div>
+                        <div class="polaroid-caption">Fly high to your dreams! 🎈</div>
+                    </div>
+
+                </div>
+
+                <!-- เค้กวันเกิด SVG แบบมีอินเตอร์แอคทีฟ (เป่าเทียนโดยการกดที่เปลวไฟ) -->
+                <div class="cake-container" onclick="blowCandle()">
+                    <svg viewBox="0 0 200 170" width="100%" height="100%">
+                        <defs>
+                            <!-- การไล่โทนสีสำหรับเปลวไฟให้ดูสมจริง -->
+                            <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ff4500" />
+                                <stop offset="50%" stop-color="#ffa500" />
+                                <stop offset="100%" stop-color="#ffff00" stop-opacity="0" />
+                            </linearGradient>
+                        </defs>
+                        <!-- จานรองเค้ก -->
+                        <ellipse cx="100" cy="140" rx="75" ry="12" class="cake-plate" />
+                        
+                        <!-- เค้กชั้นล่าง (Tier 1) -->
+                        <path d="M35,100 L35,130 C35,138 165,138 165,130 L165,100 Z" class="cake-tier cake-base" />
+                        <!-- ครีมไหลชั้นล่าง -->
+                        <path d="M35,100 C45,105 50,95 60,103 C70,111 80,104 90,101 C100,98 110,105 120,103 C130,101 140,106 150,99 C155,95 160,104 165,100 C165,100 165,95 165,95 L35,95 Z" class="cake-frosting" />
+
+                        <!-- เค้กชั้นกลาง (Tier 2) -->
+                        <path d="M50,70 L50,96 C50,102 150,102 150,96 L150,70 Z" class="cake-tier cake-middle" />
+                        <!-- ครีมไหลชั้นกลาง -->
+                        <path d="M50,70 C60,75 70,68 80,74 C90,80 100,72 110,75 C120,78 130,71 140,73 C145,74 148,69 150,70 L150,65 L50,65 Z" class="cake-frosting" />
+
+                        <!-- เชอร์รี่โรยหน้าเค้ก -->
+                        <circle cx="65" cy="62" r="5" class="cake-topping" />
+                        <circle cx="100" cy="60" r="5" class="cake-topping" />
+                        <circle cx="135" cy="62" r="5" class="cake-topping" />
+
+                        <!-- เทียนไขวันเกิด -->
+                        <rect x="96" y="32" width="8" height="28" rx="2" class="candle-wax" />
+                        <!-- เปลวไฟกะพริบได้ -->
+                        <path id="candle-flame" class="candle-flame" d="M100,10 C93,22 97,32 100,32 C103,32 107,22 100,10 Z" />
+                        <!-- ท่อควันเมื่อดับเทียน -->
+                        <foreignObject x="85" y="0" width="30" height="32">
+                            <div class="candle-smoke" id="candle-smoke"></div>
+                        </foreignObject>
+                    </svg>
+                </div>
+
+                <!-- การ์ดเขียนคำอวยพรสุดพิเศษ -->
+                <div class="wishes-card">
+                    <h2 class="wishes-title">To Someone Special ✨</h2>
+                    <p class="wishes-text">
+                        ขอให้ทุกๆ วันเป็นวันที่สวยงามสำหรับเธอนะ! มีสุขภาพที่แข็งแรง มีรอยยิ้มที่สดใสแจ่มใสในทุกวัน และสมปรารถนาในทุกๆ ความฝันที่ตั้งใจไว้เลยนะ 🎂💖
+                    </p>
+                    
+                    <!-- ข้อความลับที่จะปรากฏขึ้นหลังจากเป่าเทียนไขเท่านั้น -->
+                    <div id="hidden-wish" class="hidden-wish">
+                        🌟 "ขอให้ความปรารถนาและความฝันของคุณเป็นจริงในวันนี้และตลอดไปนะ!" 🌟
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ระบบควบคุมเครื่องเล่นเพลงพื้นหลัง (Background Music)
+         ========================================== -->
+    <!-- ลิงก์เพลงเปียโนบรรเลงเบาๆ อบอุ่นและลิขสิทธิ์ฟรี (คุณสามารถเปลี่ยนลิงก์ MP3 นี้เป็นเพลงโปรดของคุณได้เลยครับ) -->
+    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"></audio>
+
+    <!-- ปุ่มควบคุมเพลงเล่น/หยุดลอยตัวแบบมีระดับ -->
+    <button class="music-control" id="music-btn" onclick="toggleMusic()">
+        <span class="music-icon">🎵</span>
+    </button>
+
+    <!-- นำเข้าโค้ดทำงานหลักเบื้องหลัง -->
+    <script src="script.js" defer></script>
+</body>
+</html>
